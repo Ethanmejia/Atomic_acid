@@ -142,17 +142,14 @@ elements.Kiaxorite = {
         "Diathrylium": {elem1: "h_bomb", elem2: null}
     },
 };
-elements.It_Go_Boom = {
-    color: "#000000",
-    behavior:    [
-        ["XX","XX","XX"],
-        ["XX","XX","XX"],
-        ["M2 AND EX:50","M1 AND EX:50","M2 AND EX:50"]
-    ],
-    category: "weapons",
-    state: "soild",
-    density: 90,
-    hidden:true,
+elements.Dragonite = {
+    color: ["#898f22", "#913434", "#1e8547", "#249e55", "#2c1931"],
+    behavior: behaviors.POWDER,
+    state: "solid",
+    category: "powders",
+    density: 200,
+    tempHigh: 55000,
+    stateHigh: "Molten_Dragonite"
 };
 
 // Molten elements
@@ -290,5 +287,16 @@ elements.Molten_Kiaxorite = {
     temp: 4000,
     stateLow: "Kiaxorite",
     tempLow: 3500,
+    hidden:true,
+};
+elements.Molten_Dragonite = {
+    color: ["#d49a4e", "#8a530a", "#dea862", "#e37124", "#6e3108"],
+    behavior: behaviors.MOLTEN,
+    category: "states",
+    state: "liquid",
+    density: "2000",
+    tempLow: 50000,
+    stateLow: "Dragonite",
+    temp: 55000,
     hidden:true,
 };
