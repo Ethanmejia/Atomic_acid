@@ -9,10 +9,12 @@ elements.change_count = {
   onSelect: function() {
     var cans = prompt("Please input how many elements you would like to be generared each time.", 10000);
     if (!cans) { return }
+    if (cans == "skin"){settings.randomcount = 10000; settings.skineasteregg = true; saveSettings(); alert("skin"); return}
     if (cans > 2000000){alert("You have put too big of a number! This would surely crash your browser or eat up all your RAM! Element count will remain unchanged."); return}
     if (cans < 1 && (parseInt(cans) > -1) ){alert("You have either put a decimal or zero. Why? Element count will remain unchanged."); return}
     if (isNaN(parseInt(cans))){alert("Apparently your input isnt even a number. Try again. Element count will remain unchanged."); return}
     settings.randomcount = parseInt(cans)
+    settings.skineasteregg = false;
     saveSettings()
   }, 
   category: "random"
@@ -34,9 +36,10 @@ var randomProperty = function (obj) {
     return obj[keys[ keys.length* Math.random() << 0]];
 };
 if (Math.abs(settings.randomcount) == settings.randomcount){
+  if (!settings.skineasteregg){
   for (var i = 1; i <= settings.randomcount; i++){
-      var f = Math.random() < 0.2
-      var co = Math.random() < 0.2
+      var canHeat = Math.random() < 0.2
+      var canCold = Math.random() < 0.2
       elements["element_"+i] = {
           color:  "#" + color[Math.floor(Math.random()*color.length)] + color[Math.floor(Math.random()*color.length)] + color[Math.floor(Math.random()*color.length)] + color[Math.floor(Math.random()*color.length)] + color[Math.floor(Math.random()*color.length)] + color[Math.floor(Math.random()*color.length)],
           category: "random",
@@ -46,11 +49,11 @@ if (Math.abs(settings.randomcount) == settings.randomcount){
           density: randomIntFromInterval(1, 10000)
       }
       total = i
-      if (f){
+      if (canHeat){
           elements["element_"+i].tempHigh = 20 + randomIntFromInterval(10, 6000)
           elements["element_"+i].stateHigh = elementslist[Math.floor(Math.random()*elementslist.length)]
       }
-      if (co){
+      if (canCold){
           elements["element_"+i].tempLow = 20 - randomIntFromInterval(10, 270)
           elements["element_"+i].stateLow = elementslist[Math.floor(Math.random()*elementslist.length)]
       }
@@ -72,6 +75,21 @@ if (Math.abs(settings.randomcount) == settings.randomcount){
       }
     }
   }
+} else {
+  for (var i = 1; i <= settings.randomcount; i++){
+    elements["skin_" + i] = {
+      color: elements.skin.color,
+      category: "skin",
+      tick: function(pixel){
+        changePixel(pixel, "skin", false)
+      },
+      density: elements.skin.color,
+      behavior: behaviors.WALL,
+      state: "solid",
+      name: "skin"
+    }
+  }
+}
 } else {
   window.addEventListener('load', function() {
     elementslist = []
